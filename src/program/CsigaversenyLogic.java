@@ -37,6 +37,11 @@ public class CsigaversenyLogic {
             
         }
     }
+    
+    private static enum Broad{
+        adatvaltozas,
+        jatekvege
+    }
     // </editor-fold>
     
     private static String[] csigakszinei = {"Piros", "Zöld", "Kék"};
@@ -45,14 +50,14 @@ public class CsigaversenyLogic {
     
     private static int kirefogad = -1;
     private static int jelenlegikor = 1;
-    private static int maxkor = 5;
+    private static int maxkor = 15;
     private static int kieagyorsito = -1;
     private static int nyert = -1; 
     
     // <editor-fold defaultstate="collapsed" desc="control">
     public static boolean Restart(int kirefogadsz){
         boolean both = false;
-        if(kirefogadsz >= 0 && kirefogadsz < min(new int[]{csigakszinei.length, csigahely.length})){
+        if(kirefogadsz >= 0 && kirefogadsz < min(new int[]{csigakszinei.length, csigahely.length, csigalepes.length})){
             jelenlegikor = 0;
             kirefogad = kirefogadsz;
             both = true;
@@ -64,8 +69,8 @@ public class CsigaversenyLogic {
     public static boolean leptet(){
         boolean both = false;
         if(kirefogad != -1 && jelenlegikor < maxkor){
-            kieagyorsito = (int)(Math.random() * 10) < 2 ? (int)((Math.random() * min(new int[]{csigakszinei.length, csigahely.length}))) : -1;
-            for(int j = 0; j < min(new int[]{csigakszinei.length, csigahely.length}); j++){
+            kieagyorsito = (int)(Math.random() * 10) < 2 ? (int)((Math.random() * min(new int[]{csigakszinei.length, csigahely.length, csigalepes.length}))) : -1;
+            for(int j = 0; j < min(new int[]{csigakszinei.length, csigahely.length, csigalepes.length}); j++){
                 csigalepes[j] = kieagyorsito == j ? (int)(Math.random() * 3) * 2 : (int)((Math.random() * 3));
                 csigahely[j] += csigalepes[j];
             }
@@ -79,10 +84,7 @@ public class CsigaversenyLogic {
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="segédfüggvények">
-    private static enum Broad{
-        adatvaltozas,
-        jatekvege
-    }
+    
     
     private static int min(int[] szamok){
         int min = Integer.MAX_VALUE;
