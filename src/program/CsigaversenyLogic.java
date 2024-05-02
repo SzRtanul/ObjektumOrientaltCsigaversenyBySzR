@@ -57,7 +57,7 @@ public class CsigaversenyLogic {
     // <editor-fold defaultstate="collapsed" desc="control">
     public static boolean Restart(int kirefogadsz){
         boolean both = false;
-        if(kirefogadsz >= 0 && kirefogadsz < min(new int[]{csigakszinei.length, csigahely.length, csigalepes.length})){
+        if(kirefogadsz >= 0 && kirefogadsz < AuxiliaryFunctions.min(new int[]{csigakszinei.length, csigahely.length, csigalepes.length})){
             jelenlegikor = 0;
             kirefogad = kirefogadsz;
             both = true;
@@ -69,8 +69,8 @@ public class CsigaversenyLogic {
     public static boolean leptet(){
         boolean both = false;
         if(kirefogad != -1 && jelenlegikor < maxkor){
-            kieagyorsito = (int)(Math.random() * 10) < 2 ? (int)((Math.random() * min(new int[]{csigakszinei.length, csigahely.length, csigalepes.length}))) : -1;
-            for(int j = 0; j < min(new int[]{csigakszinei.length, csigahely.length, csigalepes.length}); j++){
+            kieagyorsito = (int)(Math.random() * 10) < 2 ? (int)((Math.random() * AuxiliaryFunctions.min(new int[]{csigakszinei.length, csigahely.length, csigalepes.length}))) : -1;
+            for(int j = 0; j < AuxiliaryFunctions.min(new int[]{csigakszinei.length, csigahely.length, csigalepes.length}); j++){
                 csigalepes[j] = kieagyorsito == j ? (int)(Math.random() * 3) * 2 : (int)((Math.random() * 3));
                 csigahely[j] += csigalepes[j];
             }
@@ -80,37 +80,6 @@ public class CsigaversenyLogic {
         }
         if(jelenlegikor >= maxkor) broadcast(Broad.jatekvege);
         return both;
-    }
-    // </editor-fold>
-    
-    // <editor-fold defaultstate="collapsed" desc="segédfüggvények">
-    
-    
-    private static int min(int[] szamok){
-        int min = Integer.MAX_VALUE;
-        for(int szam : szamok){
-            min = szam < min ? szam : min;
-        }
-        return min;
-    }
-
-    private static int max(int[] szamok){
-        int max = Integer.MIN_VALUE;
-        for(int szam : szamok){
-            max = szam > max ? szam : max;
-        }
-        return max;
-    }
-    
-    private static int kivalasztas(int[] szamok) {
-        int index = -1;
-        boolean both = false;
-        int max = max(csigahely);
-        for (int i = 0; i < szamok.length && !both; i++) {
-            both = szamok[i] == max;
-            if(both) index = i;
-        }
-        return index;
     }
     // </editor-fold>
     
@@ -132,7 +101,7 @@ public class CsigaversenyLogic {
     }
     
     public static int getNyert(){
-        return jelenlegikor >= maxkor ? kivalasztas(csigahely) : -1;
+        return jelenlegikor >= maxkor ? AuxiliaryFunctions.kivalasztas(csigahely, AuxiliaryFunctions.max(csigahely)) : -1;
     }
     
     public static int getFogadott(){
